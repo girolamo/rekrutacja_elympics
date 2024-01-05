@@ -9,11 +9,8 @@ COPY aspnet_for_elympics/. ./aspnet_for_elympics/
 WORKDIR /source/aspnet_for_elympics
 RUN dotnet publish -c Release -o /app
 
-
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-COPY --from=0 /app .
 
-EXPOSE 8080 443
+EXPOSE 8081
 
 ENTRYPOINT ["dotnet", "Aspnet_for_elympics.dll"]
