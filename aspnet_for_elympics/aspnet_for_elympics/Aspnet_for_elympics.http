@@ -1,0 +1,6 @@
+@aspnet_for_elympics_HostAddress = http://localhost:8080
+
+GET {{aspnet_for_elympics_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

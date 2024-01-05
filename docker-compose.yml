@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  golang_for_elympics:
+    build: ./golang_for_elympics
+    ports: 
+      - 5000:8080
+  aspnet_database:
+    image: postgres:16.1
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: myUser
+      POSTGRES_DB: NumbersDatabase
+    ports:
+      - 5432:5432
+    volumes:
+      - numbersDbVolume:/var/lib/postgresql/data
+  aspnet_for_elympics:
+    build: ./aspnet_for_elympics
+    ports:
+      - 8080:8080
+      - 443:443
+    environment:
+      ApplicationSettings__NumbersLimit: 10
+      ApplicationSettings__RandomNumberRequestUri: http://golang_for_elympics:8080/api/randomNumber
+      ConnectionStrings__AppConnectionString: Host=aspnet_database;Port=5432;Database=NumbersDatabase;Username=myUser;Password=mysecretpassword;
+      ASPNETCORE_ENVIRONMENT: Development
+
+volumes:
+  numbersDbVolume:

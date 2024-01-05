@@ -1,0 +1,5 @@
+*.log
+
+aspnet_for_elympics/aspnet_for_elympics/bin/
+aspnet_for_elympics/aspnet_for_elympics/obj/
+aspnet_for_elympics/.vs/
