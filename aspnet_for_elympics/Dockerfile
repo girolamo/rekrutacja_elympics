@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk AS build
+FROM "mcr.microsoft.com/dotnet/sdk" AS build
 WORKDIR /source
 
 COPY *.sln .
