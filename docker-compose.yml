@@ -6,7 +6,7 @@ services:
     ports: 
       - 5000:8080
   aspnet_database:
-    image: postgres:14.10
+    image: postgres:12.17
     environment:
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_USER: myUser
