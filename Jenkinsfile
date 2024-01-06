@@ -54,7 +54,7 @@ pipeline {
 
                     '''
 
-                sh '''expected_json='[{"value":40000},{"value":30000},{"value":20000}]]'
+                sh '''expected_json='[{"value":40000},{"value":30000},{"value":20000}]'
                     response=$(curl -X POST http://localhost:8888/api/numbers)
                     processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
                     if [ "$processed_response" = "$expected_json" ]; then
@@ -65,7 +65,7 @@ pipeline {
 
                     '''
 
-                sh '''expected_json='[{"value":50000},{"value":40000},{"value":30000}]]'
+                sh '''expected_json='[{"value":50000},{"value":40000},{"value":30000}]'
                     response=$(curl -X POST http://localhost:8888/api/numbers)
                     processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
                     if [ "$processed_response" = "$expected_json" ]; then
