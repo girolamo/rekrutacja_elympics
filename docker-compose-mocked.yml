@@ -22,6 +22,8 @@ services:
     ports:
       - 8888:8080
       - 443:443
+    depends_on:
+     - aspnet_database
     environment:
       ApplicationSettings__NumbersLimit: 3
       ApplicationSettings__RandomNumberRequestUri: http://golang_for_elympics:8080/api/randomNumber
