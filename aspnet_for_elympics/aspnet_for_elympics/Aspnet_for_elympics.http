@@ -1,4 +1,4 @@
-@aspnet_for_elympics_HostAddress = http://localhost:8081
+@aspnet_for_elympics_HostAddress = http://localhost:8080
 
 GET {{aspnet_for_elympics_HostAddress}}/api/
 Accept: application/json
