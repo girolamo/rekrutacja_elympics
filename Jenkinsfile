@@ -15,7 +15,7 @@ pipeline {
         stage('Run') {
             steps {
                 sh 'docker-compose -f docker-compose-mocked.yml up -d' 
-                sh 'sleep 10'     
+                sh 'sleep 15'     
             }
         }
 
@@ -39,7 +39,6 @@ pipeline {
     post {
         always {
             sh 'docker-compose down'
-            sh 'rmdir /var/lib/postgresql/data'
         }
     }
 }
