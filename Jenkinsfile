@@ -23,7 +23,7 @@ pipeline {
                 
                 script {
                     def checkServiceAvailability = { ->
-                        int attempt = 0
+                        def attempt = 0
 
                         if (attempt < CHECK_AVAILABILITY_MAX_ATTEMPTS) {
                             
