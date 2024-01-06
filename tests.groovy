@@ -1,9 +1,7 @@
-def runTest(String expectedJson, int testNumber) {
+def runTest(String expectedJson, String responseJson int testNumber) {
     println "Performing ${testNumber} test."
 
     def expected = new groovy.json.JsonSlurper().parseText(expectedJson)
-
-    def responseJson = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
     def response = new groovy.json.JsonSlurper().parseText(responseJson)
 
     response.each { it.remove('creationTime') }

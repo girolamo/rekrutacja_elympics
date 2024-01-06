@@ -31,11 +31,20 @@ pipeline {
 
                     def testsPassed = true
                     try {
-                        tests.runTest('[{"value":10000}]', 1)
-                        tests.runTest('[{"value":20000},{"value":10000}]', 2)
-                        tests.runTest('[{"value":30000},{"value":20000},{"value":10000}]', 3)
-                        tests.runTest('[{"value":40000},{"value":30000},{"value":20000}]', 4)
-                        tests.runTest('[{"value":50000},{"value":40000},{"value":30000}]', 5)
+                        def responseJson1 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        tests.runTest('[{"value":10000}]', responseJson1, 1)
+
+                        def responseJson2 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        tests.runTest('[{"value":20000},{"value":10000}]', responseJson2, 2)
+
+                        def responseJson3 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        tests.runTest('[{"value":30000},{"value":20000},{"value":10000}]', responseJson3, 3)
+
+                        def responseJson4 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        tests.runTest('[{"value":40000},{"value":30000},{"value":20000}]', responseJson4, 4)
+
+                        def responseJson5 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        tests.runTest('[{"value":50000},{"value":40000},{"value":30000}]', responseJson5, 5)
                     }
                     catch (Exception e) {
                         testsPassed = false
