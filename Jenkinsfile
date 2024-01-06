@@ -1,86 +1,48 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_COMPOSE_FILE = 'docker-compose-mocked.yml'
+    }
+
     stages {
         stage('Build') {
             steps {
                 checkout scm
                 
                 script {
-                sh 'docker-compose -f docker-compose-mocked.yml build'
-        }
+                    sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} build'
+                }
             }
         }
 
-        stage('Run') {
+        stage('Setup environment') {
             steps {
-                sh 'docker-compose -f docker-compose-mocked.yml up -d' 
+                sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} up -d'
+
                 sh 'sleep 15'     
             }
         }
 
         stage('Test') {
             steps {
-               sh '''expected_json='[{"value":10000}]'
-                    response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
-                    if [ "$processed_response" = "$expected_json" ]; then
-                        echo "1. TEST PASSED"
-                    else
-                        echo "1. TEST FAILED"
-                    fi
+                def tests = load 'tests.groovy'
 
-                    '''
+                def testsPassed = true
+                try {
+                    tests.runTest('[{"value":10000}]', 1)
+                    tests.runTest('[{"value":20000},{"value":10000}]', 2)
+                    tests.runTest('[{"value":30000},{"value":20000},{"value":10000}]', 3)
+                    tests.runTest('[{"value":40000},{"value":30000},{"value":20000}]', 4)
+                    tests.runTest('[{"value":50000},{"value":40000},{"value":30000}]', 5)
+                } 
+                catch (Exception e) {
+                    testsPassed = false
+                }
 
-                sh '''expected_json='[{"value":20000},{"value":10000}]'
-                    response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
-                    if [ "$processed_response" = "$expected_json" ]; then
-                        echo "2. TEST PASSED"
-                    else
-                        echo "2. TEST FAILED"
-                    fi
-
-                    '''
-                
-                sh '''expected_json='[{"value":30000},{"value":20000},{"value":10000}]'
-                    response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
-                    if [ "$processed_response" = "$expected_json" ]; then
-                        echo "3. TEST PASSED"
-                    else
-                        echo "3. TEST FAILED"
-                    fi
-
-                    '''
-
-                sh '''expected_json='[{"value":40000},{"value":30000},{"value":20000}]'
-                    response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
-                    if [ "$processed_response" = "$expected_json" ]; then
-                        echo "4. TEST PASSED"
-                    else
-                        echo "4. TEST FAILED"
-                    fi
-
-                    '''
-
-                sh '''expected_json='[{"value":50000},{"value":40000},{"value":30000}]'
-                    response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
-                    if [ "$processed_response" = "$expected_json" ]; then
-                        echo "5. TEST PASSED"
-                    else
-                        echo "5. TEST FAILED"
-                    fi
-
-                    '''    
-            }
-        }
-
-        stage('Cleanup') {
-            steps {
-                sh 'echo cleanup'
+                if (!testsPassed) {
+                    error "One or more tests failed"
+                }
             }
         }
     }
