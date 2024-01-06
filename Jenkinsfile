@@ -25,8 +25,7 @@ pipeline {
                     def checkServiceAvailability = { ->
                         int attempt = 0
 
-                       
-                        }
+                        
                     }
 
                     try {
