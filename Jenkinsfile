@@ -72,7 +72,7 @@ pipeline {
                         tests.runTest('[{"value":40000},{"value":30000},{"value":20000}]', responseJson4, 4)
 
                         def responseJson5 = sh(script: "curl -s -X POST ${SERVICE_URL}", returnStdout: true).trim()
-                        tests.runTest('[{"value":50000},{"value":40000},{"value":300000}]', responseJson5, 5)
+                        tests.runTest('[{"value":50000},{"value":40000},{"value":30000}]', responseJson5, 5)
                     }
                     catch (Exception e) {
                         testsPassed = false
