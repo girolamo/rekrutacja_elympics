@@ -21,6 +21,10 @@ pipeline {
 
         stage('Test') {
             steps {
+               sh 'curl -X POST http://localhost:8888/api/numbers'
+               sh 'curl -X POST http://localhost:8888/api/numbers' 
+               sh 'curl -X POST http://localhost:8888/api/numbers' 
+               sh 'curl -X POST http://localhost:8888/api/numbers' 
                sh 'curl -X POST http://localhost:8888/api/numbers' 
             }
         }

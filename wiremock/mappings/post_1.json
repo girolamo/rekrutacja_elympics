@@ -1,13 +1,84 @@
 {
-    "request": {
-      "method": "GET",
-      "url": "/api/randomNumber"
+  "mappings": [
+    {
+      "scenarioName": "Value Change",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "Return 10000",
+      "request": {
+        "method": "GET",
+        "url": "/api/randomNumber"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"randomNumber\": 10000}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
     },
-    "response": {
-      "status": 200,
-      "body": "{\"randomNumber\": 10000}",
-      "headers": {
-        "Content-Type": "application/json"
+    {
+      "scenarioName": "Value Change",
+      "requiredScenarioState": "Return 10000",
+      "newScenarioState": "Return 20000",
+      "request": {
+        "method": "GET",
+        "url": "/api/randomNumber"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"randomNumber\": 20000}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "scenarioName": "Value Change",
+      "requiredScenarioState": "Return 20000",
+      "newScenarioState": "Return 30000",
+      "request": {
+        "method": "GET",
+        "url": "/api/randomNumber"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"randomNumber\": 30000}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "scenarioName": "Value Change",
+      "requiredScenarioState": "Return 30000",
+      "newScenarioState": "Return 40000",
+      "request": {
+        "method": "GET",
+        "url": "/api/randomNumber"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"randomNumber\": 40000}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "scenarioName": "Value Change",
+      "requiredScenarioState": "Return 40000",
+      "newScenarioState": "Completed",
+      "request": {
+        "method": "GET",
+        "url": "/api/randomNumber"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"randomNumber\": 50000}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
       }
     }
-  }
+  ]
+}
