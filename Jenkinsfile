@@ -36,7 +36,7 @@ pipeline {
                                     throw new Exception("Unable to connect to service after ${CHECK_AVAILABILITY_MAX_ATTEMPTS} attempts.")
                                 }
                                 echo "Service is not yet availeble."
-                                sleep(5000) 
+                                sleep time: 5, unit: 'SECONDS'
                             }
                             attempt++
                         }
