@@ -8,16 +8,6 @@ pipeline {
                 
                 script {
                 sh 'docker-compose -f docker-compose-mocked.yml build'
-
-                 sh '''
-                        volume_name="testpipeline2_numbersDbVolume"
-                        if [ -z $(docker volume ls -q | grep $volume_name) ]; then
-                            echo "Volume $volume_name does not exist. Creating..."
-                            docker volume create $volume_name
-                        else
-                            echo "Volume $volume_name already exists."
-                        fi
-                    '''
         }
             }
         }
