@@ -23,7 +23,7 @@ pipeline {
             steps {
                sh '''expected_json='[{"value":10000}]'
                     response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq '[.[] | {value: .value}]'
+                    processed_response=$(echo $response | jq '[.[] | {value: .value}]')
                     if [ "$processed_response" == "$expected_json" ]; then
                         echo "1. TEST PASSED"
                     else
@@ -34,7 +34,7 @@ pipeline {
 
                 sh '''expected_json='[{"value":20000},{"value":10000}]'
                     response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq '[.[] | {value: .value}]'
+                    processed_response=$(echo $response | jq '[.[] | {value: .value}]')
                     if [ "$processed_response" == "$expected_json" ]; then
                         echo "1. TEST PASSED"
                     else
@@ -45,7 +45,7 @@ pipeline {
                 
                 sh '''expected_json='[{"value":30000},{"value":20000},{"value":10000}]'
                     response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq '[.[] | {value: .value}]'
+                    processed_response=$(echo $response | jq '[.[] | {value: .value}]')
                     if [ "$processed_response" == "$expected_json" ]; then
                         echo "1. TEST PASSED"
                     else
@@ -56,7 +56,7 @@ pipeline {
 
                 sh '''expected_json='[{"value":40000},{"value":30000},{"value":20000}]]'
                     response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq '[.[] | {value: .value}]'
+                    processed_response=$(echo $response | jq '[.[] | {value: .value}]')
                     if [ "$processed_response" == "$expected_json" ]; then
                         echo "1. TEST PASSED"
                     else
@@ -67,7 +67,7 @@ pipeline {
 
                 sh '''expected_json='[{"value":50000},{"value":40000},{"value":30000}]]'
                     response=$(curl -X POST http://localhost:8888/api/numbers)
-                    processed_response=$(echo $response | jq '[.[] | {value: .value}]'
+                    processed_response=$(echo $response | jq '[.[] | {value: .value}]')
                     if [ "$processed_response" == "$expected_json" ]; then
                         echo "1. TEST PASSED"
                     else
