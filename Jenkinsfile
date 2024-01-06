@@ -14,7 +14,7 @@ pipeline {
 
         stage('Run') {
             steps {
-                sh 'docker-compose up -d' 
+                sh 'docker-compose -f docker-compose-mocked.yml up -d' 
                 sh 'sleep 10'     
             }
         }
