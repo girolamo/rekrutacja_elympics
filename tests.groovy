@@ -1,5 +1,5 @@
 def runTest(String expectedJson, int testNumber) {
-    sh '''
+    sh script: '''
         response=$(curl -X POST http://localhost:8888/api/numbers)
         processed_response=$(echo $response | jq -c '[.[] | {value: .value}]')
         if [ "$processed_response" = "$''' + expectedJson + '''" ]; then
@@ -10,3 +10,5 @@ def runTest(String expectedJson, int testNumber) {
         fi
     ''', returnStatus: false
 }
+
+return this
