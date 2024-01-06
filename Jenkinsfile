@@ -31,12 +31,12 @@ pipeline {
 
                     def testsPassed = true
                     try {
-                        tests.runTest()
-                        //tests.runTest('[{"value":20000},{"value":10000}]', 2)
-                        //tests.runTest('[{"value":30000},{"value":20000},{"value":10000}]', 3)
-                        //tests.runTest('[{"value":40000},{"value":30000},{"value":20000}]', 4)
-                        //tests.runTest('[{"value":50000},{"value":40000},{"value":30000}]', 5)
-                    } 
+                        tests.runTest('[{"value":10000}]', 1)
+                        tests.runTest('[{"value":20000},{"value":10000}]', 2)
+                        tests.runTest('[{"value":30000},{"value":20000},{"value":10000}]', 3)
+                        tests.runTest('[{"value":40000},{"value":30000},{"value":20000}]', 4)
+                        tests.runTest('[{"value":50000},{"value":40000},{"value":30000}]', 5)
+                    }
                     catch (Exception e) {
                         testsPassed = false
                     }
