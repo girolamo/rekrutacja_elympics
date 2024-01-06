@@ -1,0 +1,41 @@
+golangApp:
+  image:
+    repository: "rekrutacja_elympics-golang_for_elympics"
+    pullPolicy: IfNotPresent
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8080
+
+aspnetApp:
+  image:
+    repository: rekrutacja_elympics-aspnet_for_elympics
+    pullPolicy: IfNotPresent
+    tag: latest
+  service:
+    type: ClusterIP
+    ports:
+      http: 8888
+      https: 443
+  env:
+    NumbersLimit: 10
+    RandomNumberRequestUri: "http://golang-for-elympics:8080/api/randomNumber"
+    AppConnectionString: "Host=aspnet-database;Port=5432;Database=NumbersDatabase;Username=myUser;Password=mysecretpassword"
+    ASPNETCORE_ENVIRONMENT: Development
+
+postgres:
+  image:
+    repository: postgres
+    pullPolicy: IfNotPresent
+    tag: "16.1"
+  service:
+    type: ClusterIP
+    port: 5432
+  env:
+    POSTGRES_PASSWORD: mysecretpassword
+    POSTGRES_USER: myUser
+    POSTGRES_DB: NumbersDatabase
+  persistence:
+    size: 1Gi
+
+replicaCount: 1

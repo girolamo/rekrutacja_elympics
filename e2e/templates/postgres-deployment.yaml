@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnet-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspnet-database
+  template:
+    metadata:
+      labels:
+        app: aspnet-database
+    spec:
+      containers:
+      - name: aspnet-database
+        image: postgres:16.1
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_PASSWORD
+          value: mysecretpassword
+        - name: POSTGRES_USER
+          value: myUser
+        - name: POSTGRES_DB
+          value: NumbersDatabase
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: numbers-db-volume
+      volumes:
+      - name: numbers-db-volume
+        persistentVolumeClaim:
+          claimName: numbers-db-pvc

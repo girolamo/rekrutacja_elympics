@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnet-for-elympics
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: aspnet-for-elympics
+  template:
+    metadata:
+      labels:
+        app: aspnet-for-elympics
+    spec:
+      containers:
+      - name: aspnet-for-elympics
+        image: localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest
+        ports:
+        - containerPort: 8080
+        - containerPort: 443
+        env:
+        - name: ApplicationSettings__NumbersLimit
+          value: "10"
+        - name: ApplicationSettings__RandomNumberRequestUri
+          value: "http://golang-for-elympics-service:8081/api/randomNumber"
+        - name: ConnectionStrings__AppConnectionString
+          value: "Host=aspnet-database;Port=5432;Database=NumbersDatabase;Username=myUser;Password=mysecretpassword;"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"

@@ -4,7 +4,7 @@ services:
   golang_for_elympics:
     image: wiremock/wiremock:latest
     ports: 
-      - 5000:8080
+      - 5000:8081
     volumes:
       - ./wiremock:/home/wiremock
   aspnet_database:

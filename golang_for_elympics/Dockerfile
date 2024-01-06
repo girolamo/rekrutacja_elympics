@@ -9,6 +9,6 @@ COPY *.go ./
 
 RUN go build -o /random-number-api
 
-EXPOSE 5000:8080
+EXPOSE 8081
 
 CMD ["/random-number-api"]

@@ -25,5 +25,5 @@ func getRandomNumber(cx *gin.Context) {
 func main() {
 	router := gin.Default()
 	router.GET("api/randomNumber", getRandomNumber)
-	router.Run("0.0.0.0:8080")
+	router.Run("0.0.0.0:8081")
 }

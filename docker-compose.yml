@@ -4,7 +4,7 @@ services:
   golang_for_elympics:
     build: ./golang_for_elympics
     ports: 
-      - 5000:8080
+      - 5000:8081
   aspnet_database:
     image: postgres:16.1
     environment:
