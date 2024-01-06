@@ -1,25 +1,87 @@
-Pre-Requirments in order to run e2e tests:
+# E2E Tests Setup Guide
+
+This guide provides steps to set up and run end-to-end (e2e) tests. 
+
+## Pre-Requisites
+
+Before running the e2e tests, ensure you have the following installed:
+
 - Docker
 - Docker-compose
-- k8s
-- up and runing metrics-server on k8s
+- Kubernetes (k8s)
+- A running metrics-server on k8s
 - Helm
 - Git
+- Postman
 
-Steps to follow:
-1. First clone code repository, by running
-git clone https://github.com/girolamo/rekrutacja_elympics.git
+## Setup Steps
 
-2. Navigate in your shell to project root directory
-3. run '''Docker-compose build''' in order to build all required containers localy
-4. Create repository on localhost by runig '''docker run -d -p 5001:5000 --restart=always --name registry registry:2''' . It will help k8s correctly pull image
-5. Tag previously created images.  
-    5.1 Run '''docker tag rekrutacja_elympics-aspnet_for_elympics:latest localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest'''
-    5.2 Run '''docker tag rekrutacja_elympics-golang_for_elympics:latest localhost:5001/rekrutacja_elympics-golang_for_elympics:latest'''
-6. Push both images to local repository
-    5.1 Run '''docker push localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest'''
-    5.2 Run '''docker push localhost:5001/rekrutacja_elympics-golang_for_elympics:latest'''
-7. Start deployment by runnin '''helm install e2e e2e/''' 
+1. **Clone the Code Repository**
+   
+   ```bash
+   git clone https://github.com/girolamo/rekrutacja_elympics.git
+   ```
 
-Post
-1. After whole process - uninstall deployment by running "helm uninstall e2e"
+2. **Navigate to Project Root Directory**
+3. **Build Containers Locally**
+
+Run the following command to build all required containers:
+    
+    ```bash
+    Docker-compose build
+    ```
+
+4. **Create Local Repository**
+
+Set up a local repository for Kubernetes to pull images:
+
+    ```bash
+    docker run -d -p 5001:5000 --restart=always --name registry registry:2
+    ```
+
+5. **Tag Images**
+
+Tag the created images:
+
+    Tag ASP.NET app:
+    ```bash
+    docker tag rekrutacja_elympics-aspnet_for_elympics:latest localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest
+    ```
+
+    Tag Golang app:
+    ```bash
+    docker tag rekrutacja_elympics-golang_for_elympics:latest localhost:5001/rekrutacja_elympics-golang_for_elympics:latest
+    ```
+
+6. **Push Images to Local Repository**
+
+    Push ASP.NET app:
+    ```bash
+    docker push localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest
+    ```
+
+    Push Golang app:
+    ```bash
+    docker push localhost:5001/rekrutacja_elympics-golang_for_elympics:latest
+    ```
+7. **Start deployment**
+
+    ```bash
+    helm install e2e e2e/
+    ```
+
+8. **Testing the Setup**
+
+    Now you can test app by sending POST request to the endpoin using Postman
+
+    ```bash
+    http://localhost:8888/api/Numbers
+    ```
+
+## Post-Deployment
+
+    After completing the process, uninstall the deployment:
+
+    ```bash
+    helm uninstall e2e
+    ```
