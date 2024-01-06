@@ -41,24 +41,24 @@ Set up a local repository for Kubernetes to pull images:
 
 Tag the created images:
 
-    Tag ASP.NET app:
+Tag ASP.NET app:
     ```console
     docker tag rekrutacja_elympics-aspnet_for_elympics:latest localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest
     ```
 
-    Tag Golang app:
+Tag Golang app:
     ```console
     docker tag rekrutacja_elympics-golang_for_elympics:latest localhost:5001/rekrutacja_elympics-golang_for_elympics:latest
     ```
 
 6. **Push Images to Local Repository**
 
-    Push ASP.NET app:
+Push ASP.NET app:
     ```console
     docker push localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest
     ```
 
-    Push Golang app:
+Push Golang app:
     ```console
     docker push localhost:5001/rekrutacja_elympics-golang_for_elympics:latest
     ```
@@ -71,16 +71,15 @@ Tag the created images:
 
 8. **Testing the Setup**
 
-    Now you can test app by sending POST request to the endpoin using Postman
+Now you can test app by sending POST request to the endpoin using Postman
     ```console
     http://localhost:8888/api/Numbers
     ```
 
 ## Post-Deployment
 
-    After completing the process, uninstall the deployment:
+After completing the process, uninstall the deployment:
 
     ```console
     helm uninstall e2e
     ```
-    
