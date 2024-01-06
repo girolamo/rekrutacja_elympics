@@ -20,7 +20,7 @@ pipeline {
 
         stage('Test') {
             steps {
-               sh 'curl -X POST -H \'Content-Type: application/json\' http://localhost:8081' 
+               sh 'curl -X POST -H \'Content-Type: application/json\' http://localhost:8081/api/numbers' 
             }
         }
 
