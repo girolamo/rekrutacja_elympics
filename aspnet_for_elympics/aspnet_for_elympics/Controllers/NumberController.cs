@@ -17,6 +17,14 @@ namespace Aspnet_for_elympics.Controllers
             this.randomNumberService = randomNumberService;
         }
 
+        [HttpGet]
+        public ActionResult<NumberDTO> GetAll()
+        {
+            var numbers = numberService.GetAll();
+
+            return Ok(numbers);
+        }
+
         [HttpPost]
         public ActionResult<IEnumerable<NumberDTO>> FetchStoreThenReturn()
         {

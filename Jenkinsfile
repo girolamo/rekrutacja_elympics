@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose-mocked.yml'
-        CHECK_AVAILABILITY_MAX_ATTEMPTS = 10
+        CHECK_AVA_MAX_ATTEMPTS = 10
         SERVICE_URL = "http://localhost:8888/api/numbers"
     }
     stages {
@@ -24,16 +24,16 @@ pipeline {
                 script {
                     def checkServiceAvailability = { ->
                         def attempt = 0
-                        def maxAva = Integer.parseInt(env.CHECK_AVAILABILITY_MAX_ATTEMPTS)
+                        def maxAva = Integer.parseInt(env.CHECK_AVA_MAX_ATTEMPTS)
 
                         while (attempt < maxAva) {
-                            echo "Checking service availability: Attempt ${attempt + 1} from ${CHECK_AVAILABILITY_MAX_ATTEMPTS}..."
+                            echo "Checking service availability: Attempt ${attempt + 1} from ${CHECK_AVA_MAX_ATTEMPTS}..."
                             try {
-                                sh "curl -s -X POST ${SERVICE_URL}"
+                                sh "curl -s -X GET ${SERVICE_URL}"
                                 return
                             } catch (Exception e) {
-                                if (attempt == CHECK_AVAILABILITY_MAX_ATTEMPTS - 1) {
-                                    throw new Exception("Unable to connect to service after ${CHECK_AVAILABILITY_MAX_ATTEMPTS} attempts.")
+                                if (attempt == CHECK_AVA_MAX_ATTEMPTS - 1) {
+                                    throw new Exception("Unable to connect to service after ${CHECK_AVA_MAX_ATTEMPTS} attempts.")
                                 }
                                 echo "Service is not yet availeble."
                                 sleep time: 5, unit: 'SECONDS'
@@ -59,19 +59,19 @@ pipeline {
 
                     def testsPassed = true
                     try {
-                        def responseJson1 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        def responseJson1 = sh(script: "curl -s -X POST ${SERVICE_URL}", returnStdout: true).trim()
                         tests.runTest('[{"value":10000}]', responseJson1, 1)
 
-                        def responseJson2 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        def responseJson2 = sh(script: "curl -s -X POST ${SERVICE_URL}", returnStdout: true).trim()
                         tests.runTest('[{"value":20000},{"value":10000}]', responseJson2, 2)
 
-                        def responseJson3 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        def responseJson3 = sh(script: "curl -s -X POST ${SERVICE_URL}", returnStdout: true).trim()
                         tests.runTest('[{"value":30000},{"value":20000},{"value":10000}]', responseJson3, 3)
 
-                        def responseJson4 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        def responseJson4 = sh(script: "curl -s -X POST ${SERVICE_URL}", returnStdout: true).trim()
                         tests.runTest('[{"value":40000},{"value":30000},{"value":20000}]', responseJson4, 4)
 
-                        def responseJson5 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+                        def responseJson5 = sh(script: "curl -s -X POST ${SERVICE_URL}", returnStdout: true).trim()
                         tests.runTest('[{"value":50000},{"value":40000},{"value":30000}]', responseJson5, 5)
                     }
                     catch (Exception e) {

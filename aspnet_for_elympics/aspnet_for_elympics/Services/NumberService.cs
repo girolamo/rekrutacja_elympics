@@ -18,6 +18,15 @@ namespace Aspnet_for_elympics.Services
             numbersLimit = settings.Value.NumbersLimit;
         }
 
+        public IEnumerable<NumberDTO> GetAll()
+        {
+            var numbers = dbContext.Numbers.ToList();
+
+            var numbersDTO = mapper.Map<List<NumberDTO>>(numbers);
+
+            return numbersDTO;
+        }
+
         public IEnumerable<NumberDTO> GetLatest()
         {
             var numbers = dbContext.Numbers.
