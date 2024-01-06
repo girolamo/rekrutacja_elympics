@@ -1,4 +1,4 @@
-def runTest(String expectedJson, String responseJson int testNumber) {
+def runTest(String expectedJson, String responseJson, int testNumber) {
     println "Performing ${testNumber} test."
 
     def expected = new groovy.json.JsonSlurper().parseText(expectedJson)
