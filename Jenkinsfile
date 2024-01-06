@@ -7,7 +7,7 @@ pipeline {
                 checkout scm
                 
                 script {
-                sh 'docker-compose -f docker-compose.yml build'
+                sh 'docker-compose -f docker-compose-mocked.yml build'
         }
             }
         }
