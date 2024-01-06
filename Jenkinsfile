@@ -23,7 +23,7 @@ pipeline {
                 
                 script {
                     def checkServiceAvailability = { ->
-                        def attempt = 0
+                        int attempt = 0
 
                         while (attempt < CHECK_AVAILABILITY_MAX_ATTEMPTS) {
                             echo "Checking service availability: Attempt ${attempt + 1} from ${CHECK_AVAILABILITY_MAX_ATTEMPTS}..."
