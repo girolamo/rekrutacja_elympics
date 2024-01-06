@@ -8,7 +8,7 @@ def runTest(String expectedJson, String responseJson, int testNumber) {
 
     if (expected != response) {
         println "Test number ${testNumber} failed."
-        error("JSON are not the same! Expected: ${expectedJson}, recieved: ${responseJson}")
+        error("JSON are not the same! Expected: ${expected}, recieved: ${response}")
     } else {
         println "Test number ${testNumber} passed."
     }
