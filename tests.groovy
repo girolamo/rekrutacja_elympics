@@ -2,7 +2,7 @@ def runTest(String expectedJson, String responseJson, int testNumber) {
     println "Performing ${testNumber} test."
 
     def expected = new groovy.json.JsonSlurper().parseText(expectedJson)
-    def response = new groovy.json.JsonSlurper().parseText(responseJson)
+    def response = new groovy.json.JsonSlurper().parseText("sssss")
 
     response.each { it.remove('creationTime') }
 
