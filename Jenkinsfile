@@ -25,7 +25,9 @@ pipeline {
                     def checkServiceAvailability = { ->
                         int attempt = 0
 
-                        
+                        if (attempt < CHECK_AVAILABILITY_MAX_ATTEMPTS) {
+                            
+                        }
                     }
 
                     try {
