@@ -62,6 +62,7 @@ Tag the created images:
     ```console
     docker push localhost:5001/rekrutacja_elympics-golang_for_elympics:latest
     ```
+
 7. **Start deployment**
 
     ```console
@@ -82,3 +83,4 @@ Tag the created images:
     ```console
     helm uninstall e2e
     ```
+    
