@@ -31,6 +31,7 @@ pipeline {
 
                     def testsPassed = true
                     try {
+                        tests.runTest('[{"value":10000}]', 1)
                         
                     } 
                     catch (Exception e) {
