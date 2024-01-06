@@ -29,7 +29,17 @@ pipeline {
                 script {
                     def tests = load 'tests.groovy'
 
-                    
+                    def testsPassed = true
+                    try {
+                        
+                    } 
+                    catch (Exception e) {
+                        testsPassed = false
+                    }
+
+                    if (!testsPassed) {
+                        error "One or more tests failed"
+                    }
                 }
             }
         }
