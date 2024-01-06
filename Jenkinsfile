@@ -39,9 +39,15 @@ pipeline {
     post {
         always {
             sh 'docker-compose down'
-            
-            sh 'volumes=$(docker volume ls -q | grep numbersDbVolume)'
-            sh 'for volume in $volumes; do echo "Removing Docker volume: $volume"; docker volume rm $volume; done'
+
+            sh '''
+                volumes=$(docker volume ls -q | grep numbersDbVolume)
+                    for volume in $volumes; do 
+                        echo "Removing Docker volume: $volume"
+                        docker volume rm $volume
+                    done
+                '''
+
         }
     }
 }
