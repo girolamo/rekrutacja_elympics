@@ -14,13 +14,14 @@ pipeline {
 
         stage('Run') {
             steps {
-                sh 'docker-compose up -d'      
+                sh 'docker-compose up -d' 
+                sh 'sleep 10'     
             }
         }
 
         stage('Test') {
             steps {
-               sh 'curl -X POST -H \'Content-Type: application/json\' http://localhost:8081/api/numbers' 
+               sh 'curl -X POST http://localhost:8081/api/numbers' 
             }
         }
 
