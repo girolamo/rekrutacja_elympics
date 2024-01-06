@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aspnet-database
+  name: {{ .Values.postgres.name }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: aspnet-database
+      app: {{ .Values.postgres.name }}
   template:
     metadata:
       labels:
-        app: aspnet-database
+        app: {{ .Values.postgres.name }}
     spec:
       containers:
-      - name: aspnet-database
-        image: postgres:16.1
+      - name: {{ .Values.postgres.name }}
+        image: {{ .Values.postgres.image.repository }}
         ports:
-        - containerPort: 5432
+        - containerPort: {{ .Values.postgres.image.ports.containerPort }}
         env:
         - name: POSTGRES_PASSWORD
-          value: mysecretpassword
+          value: {{ .Values.postgres.env.POSTGRES_PASSWORD }}
         - name: POSTGRES_USER
-          value: myUser
+          value: {{ .Values.postgres.env.POSTGRES_USER }}
         - name: POSTGRES_DB
-          value: NumbersDatabase
+          value: {{ .Values.postgres.env.NumbersDatabase }}
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: numbers-db-volume
+        - mountPath: {{ .Values.postgres.persistence.mountPath }}
+          name: {{ .Values.postgres.persistence.name }}
       volumes:
-      - name: numbers-db-volume
+      - name: {{ .Values.postgres.persistence.name }}
         persistentVolumeClaim:
-          claimName: numbers-db-pvc
+          claimName: {{ .Values.postgres.persistence.claimName }}

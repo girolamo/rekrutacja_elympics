@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: aspnet-database
+  name: {{ .Values.postgres.name }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.postgres.service.type }}
   ports:
-    - port: 5432
-      targetPort: 5432
+    - port: {{ .Values.postgres.service.port }}
+      targetPort: {{ .Values.postgres.image.ports.containerPort }}
   selector:
-    app: aspnet-database
+    app: {{ .Values.postgres.name }}

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: golang-for-elympics
+  name: {{ .Values.golangApp.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: golang-for-elympics
+      app: {{ .Values.golangApp.name }}
   template:
     metadata:
       labels:
-        app: golang-for-elympics
+        app: {{ .Values.golangApp.name }}
     spec:
       containers:
-      - name: golang-for-elympics
-        image: localhost:5001/rekrutacja_elympics-golang_for_elympics:latest
+      - name: {{ .Values.golangApp.name }}
+        image: {{ .Values.golangApp.image.repository }}
         ports:
-        - containerPort: 8081
+        - containerPort: {{ .Values.golangApp.image.ports.containerPort }}

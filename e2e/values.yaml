@@ -1,33 +1,38 @@
 golangApp:
+  name: golang-for-elympics
   image:
-    repository: "rekrutacja_elympics-golang_for_elympics"
-    pullPolicy: IfNotPresent
-    tag: latest
+    repository: localhost:5001/rekrutacja_elympics-golang_for_elympics:latest
+    ports:
+      containerPort: 8081
   service:
     type: ClusterIP
-    port: 8080
+    protocol: TCP
+    port: 8081
 
 aspnetApp:
+  name: aspnet-for-elympics
   image:
-    repository: rekrutacja_elympics-aspnet_for_elympics
-    pullPolicy: IfNotPresent
-    tag: latest
-  service:
-    type: ClusterIP
+    repository: localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest
     ports:
-      http: 8888
-      https: 443
+      containerPort: 8080
+  service:
+    type: LoadBalancer
+    protocol: TCP
+    port: 8888
   env:
-    NumbersLimit: 10
-    RandomNumberRequestUri: "http://golang-for-elympics:8080/api/randomNumber"
-    AppConnectionString: "Host=aspnet-database;Port=5432;Database=NumbersDatabase;Username=myUser;Password=mysecretpassword"
-    ASPNETCORE_ENVIRONMENT: Development
+    ApplicationSettings:
+      NumbersLimit: 10
+      RandomNumberRequestUri: "http://golang-for-elympics-service:8081/api/randomNumber"
+    ConnectionStrings:
+      AppConnectionString: "Host=aspnet-database;Port=5432;Database=NumbersDatabase;Username=myUser;Password=mysecretpassword;"
+    ASPNETCORE_ENVIRONMENT: "Development"
 
 postgres:
+  name: aspnet-database
   image:
-    repository: postgres
-    pullPolicy: IfNotPresent
-    tag: "16.1"
+    repository: postgres:16.1
+    ports:
+      containerPort: 5432
   service:
     type: ClusterIP
     port: 5432
@@ -36,6 +41,9 @@ postgres:
     POSTGRES_USER: myUser
     POSTGRES_DB: NumbersDatabase
   persistence:
+    name: numbers-db-volume
+    claimName: numbers-db-pvc
+    mountPath: /var/lib/postgresql/data
     size: 1Gi
 
 replicaCount: 1

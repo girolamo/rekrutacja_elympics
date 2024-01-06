@@ -1,29 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aspnet-for-elympics
+  name: {{ .Values.aspnetApp.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: aspnet-for-elympics
+      app: {{ .Values.aspnetApp.name }}
   template:
     metadata:
       labels:
-        app: aspnet-for-elympics
+        app: {{ .Values.aspnetApp.name }}
     spec:
       containers:
-      - name: aspnet-for-elympics
-        image: localhost:5001/rekrutacja_elympics-aspnet_for_elympics:latest
+      - name: {{ .Values.aspnetApp.name }}
+        image: {{ .Values.aspnetApp.image.repository }}
         ports:
-        - containerPort: 8080
-        - containerPort: 443
+        - containerPort: {{ .Values.aspnetApp.image.ports.containerPort }}
         env:
-        - name: ApplicationSettings__NumbersLimit
-          value: "10"
-        - name: ApplicationSettings__RandomNumberRequestUri
-          value: "http://golang-for-elympics-service:8081/api/randomNumber"
-        - name: ConnectionStrings__AppConnectionString
-          value: "Host=aspnet-database;Port=5432;Database=NumbersDatabase;Username=myUser;Password=mysecretpassword;"
-        - name: ASPNETCORE_ENVIRONMENT
-          value: "Development"
+          - name: ApplicationSettings__NumbersLimit
+            value: {{ .Values.aspnetApp.env.ApplicationSettings.NumbersLimit | quote }}
+          - name: ApplicationSettings__RandomNumberRequestUri
+            value: {{ .Values.aspnetApp.env.ApplicationSettings.RandomNumberRequestUri }}
+          - name: ConnectionStrings__AppConnectionString
+            value: {{ .Values.aspnetApp.env.ConnectionStrings.AppConnectionString }}
+          - name: ASPNETCORE_ENVIRONMENT
+            value: {{ .Values.aspnetApp.env.ASPNETCORE_ENVIRONMENT }}
