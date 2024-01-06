@@ -1,23 +1,18 @@
-def runTest(String expectedJson, int testNumber) {
-    if (!sh(script: 'command -v jq', returnStatus: true)) {
-        echo 'jq is not installed. Test cannot be run.'
-        return
+def runTest(expectedJson, testNumber) {
+    println "Performing ${testNumber} test."
+    def expected = new groovy.json.JsonSlurper().parseText(expectedJson)
+
+    def responseJson = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
+    def response = new groovy.json.JsonSlurper().parseText(responseJson)
+
+    response.each { it.remove('creationTime') }
+
+    if (expected != response) {
+        println "Test number ${testNumber} failed."
+        error("JSON are not the same! Expected: ${expectedJson}, recieved: ${responseJson}")
+    } else {
+        println "Test number ${testNumber} passed."
     }
 
-    script = """
-        response=\$(curl -s -X POST http://localhost:8888/api/numbers)
-        processed_response=\$(echo \$response | jq -c '[.[] | {value: .value}]')
-
-        expected_normalized=\$(echo ${JsonOutput.toJson(expectedJson)} | jq -c .)
-        response_normalized=\$(echo \$processed_response | jq -c .)
-
-        if [ "\$response_normalized" = "\$expected_normalized" ]; then
-            echo "${testNumber}. TEST PASSED"
-        else
-            echo "${testNumber}. TEST FAILED: Expected \$expected_normalized, Received \$response_normalized"
-            exit 1
-        fi
-    """
-
-    sh(script: script, returnStatus: false)
+    return true
 }
