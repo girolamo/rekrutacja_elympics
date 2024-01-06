@@ -35,7 +35,7 @@ pipeline {
                         tests.runTest('[{"value":10000}]', responseJson1, 1)
 
                         def responseJson2 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
-                        tests.runTest('[{"value":2000},{"value":10000}]', responseJson2, 2)
+                        tests.runTest('[{"value":20000},{"value":10000}]', responseJson2, 2)
 
                         def responseJson3 = sh(script: "curl -s -X POST http://localhost:8888/api/numbers", returnStdout: true).trim()
                         tests.runTest('[{"value":30000},{"value":20000},{"value":10000}]', responseJson3, 3)
@@ -48,6 +48,7 @@ pipeline {
                     }
                     catch (Exception e) {
                         testsPassed = false
+                        println e.message
                     }
 
                     if (!testsPassed) {
