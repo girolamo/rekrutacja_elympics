@@ -14,6 +14,4 @@ def runTest(String expectedJson, int testNumber) {
     } else {
         println "Test number ${testNumber} passed."
     }
-
-    return true
 }
