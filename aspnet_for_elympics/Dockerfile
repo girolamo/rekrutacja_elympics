@@ -13,6 +13,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app .
 
-EXPOSE 8080 443
+EXPOSE 8081 443
 
 ENTRYPOINT ["dotnet", "Aspnet_for_elympics.dll"]
