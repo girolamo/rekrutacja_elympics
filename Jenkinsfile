@@ -5,7 +5,7 @@ pipeline {
         DOCKER_COMPOSE_FILE = 'docker-compose-mocked.yml'
         CHECK_AVAILABILITY_MAX_ATTEMPTS = 10
         SERVICE_URL = "http://localhost:8888/api/numbers"
-
+    }
     stages {
         stage('Build') {
             steps {
