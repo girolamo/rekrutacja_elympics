@@ -75,8 +75,8 @@ Set up a local repository for Kubernetes to pull images:
     ```
 
 ## Post-Deployment
+1. **After completing the process, uninstall the deployment**
 
-    After completing the process, uninstall the deployment:
     ```console
     helm uninstall e2e
     ```
