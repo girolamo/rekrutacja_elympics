@@ -7,19 +7,20 @@ pipeline {
                 checkout scm
                 
                 script {
-                
-                sh 'echo build'
                 sh 'docker-compose -f docker-compose.yml build'
         }
             }
         }
 
+        stage('Run') {
+            steps {
+                sh 'docker-compose up -d'      
+            }
+        }
+
         stage('Test') {
             steps {
-                sh 'echo test'
-                sh 'docker-compose up -d'
-
-                sh 'docker-compose down'
+               sh 'curl -X POST -H \'Content-Type: application/json\' http://localhost:8081' 
             }
         }
 
@@ -32,7 +33,7 @@ pipeline {
 
     post {
         always {
-            sh 'echo post'
+            sh 'docker-compose down'
         }
     }
 }
