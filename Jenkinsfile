@@ -24,8 +24,22 @@ pipeline {
                 script {
                     def checkServiceAvailability = { ->
                         def attempt = 0
+                        def maxAva = Integer.parseInt(env.CHECK_AVAILABILITY_MAX_ATTEMPTS)
 
-                        
+                        while (attempt < maxAva) {
+                            echo "Checking service availability: Attempt ${attempt + 1} from ${CHECK_AVAILABILITY_MAX_ATTEMPTS}..."
+                            try {
+                                sh "curl -s -X POST ${SERVICE_URL}"
+                                return
+                            } catch (Exception e) {
+                                if (attempt == CHECK_AVAILABILITY_MAX_ATTEMPTS - 1) {
+                                    throw new Exception("Unable to connect to service after ${CHECK_AVAILABILITY_MAX_ATTEMPTS} attempts.")
+                                }
+                                echo "Service is not yet availeble."
+                                sleep(5000) 
+                            }
+                            attempt++
+                        }
                     }
 
                     try {
